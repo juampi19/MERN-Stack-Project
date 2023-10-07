@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
 import userRouter from './routes/user.routes.js'
+import authRouter from './routes/auth.routes.js'
 
 //utilizar variables de entorno
 dotenv.config();
@@ -32,3 +33,4 @@ app.listen(PORT, () => {
 
 //rutas de la API
 app.use('/api/user', userRouter)
+app.use('/api/auth', authRouter)
