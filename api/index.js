@@ -2,6 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
+import userRouter from './routes/user.routes.js'
+
 //utilizar variables de entorno
 dotenv.config();
 
@@ -25,4 +27,8 @@ const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`)
-})
+});
+
+
+//rutas de la API
+app.use('/api/user', userRouter)
