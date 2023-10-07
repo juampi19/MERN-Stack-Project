@@ -1,14 +1,23 @@
-import dotenv from 'dotenv'
 import express from 'express'
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
+
+//utilizar variables de entorno
+dotenv.config();
+
+
+//conectar base de datos
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  console.log('Connected to MongoDB')
+}).catch((err) => {
+  console.log(err)
+});
 
 
 const app = express();
 
 //poder leer formato json
 app.use(express.json());
-
-//utilizar variables de entorno
-dotenv.config();
 
 
 //port de la aplicacion
