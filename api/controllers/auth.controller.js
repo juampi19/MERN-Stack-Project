@@ -4,7 +4,6 @@ import bcryptjs from 'bcryptjs'
 //Crear usuario
 export const signup = async (req, res, next) => {
 
-  console.log(req.body)
   const { username, email, password } = req.body;
 
   //hash password
