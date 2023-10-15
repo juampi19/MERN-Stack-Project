@@ -37,6 +37,7 @@ export const SingUp = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      
       if (data.success === false) {
         setLoading(false);
         setError('The user or email already exists');
