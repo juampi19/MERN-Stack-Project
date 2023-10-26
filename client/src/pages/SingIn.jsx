@@ -1,13 +1,17 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
+import {signInFailure, signInStart, signInSuccess} from '../redux/user/userSlice.js'
 
 
 export const SingIn = () => {
-  const [formData, setFormData] = useState({})
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({});
+
+  const {loading, error} = useSelector((state) => state.user)
+  
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setFormData({
@@ -21,14 +25,14 @@ export const SingIn = () => {
 
     //comprobamos que el formulario no este vacio
     if(Object.keys(formData).length === 0) {
-      setError('The fields are empty');
+      dispatch(signInFailure('The fields are empty'))
       return;
     }
 
     
 
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
@@ -41,18 +45,15 @@ export const SingIn = () => {
       
 
       if(data.success === false){
-        setLoading(false);
-        setError("The user or email doesn't exists");
+        dispatch(signInFailure("The user or email doesn't exists"));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data))
       navigate('/');
 
 
     } catch (error) {
-      setLoading(false);
-      setError("The user or email doesn't exists");
+      dispatch(signInFailure("The user or email doesn't exists"))
     }
   }
 
